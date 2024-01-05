@@ -16,13 +16,21 @@ $listallloai= $loaidb->getallloai();
 }
 
 </style>
+<center>
+<h2>Danh Mục</h2> 
+</center>
+<br>
 
 <?php foreach($listallloai as $loai) {?>
+    
     <div class="hero__categories">
     <div class="hero__categories__all">
         <span><?php echo $loai->gettenloai() ?></span>
     </div>
     <ul class="sub-categories">
+    <li>
+                <a href="shop.php?idloai=<?php echo $loai->getidloai() ?>"><?php echo 'Tất Cả'?></a>
+            </li>
         <?php 
         $loaicondb = new loaicondb();
         $listloai2 = $loaicondb->getloaiconbyloaicha($loai->getidloai());

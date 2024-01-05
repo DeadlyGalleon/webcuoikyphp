@@ -15,10 +15,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sản Phẩm</title>
 
-    <!-- Google Font -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet  "> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.1.0/css/v4-shims.min.css">
+  
 
-    <!-- Css Styles -->
+
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
@@ -30,65 +33,7 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-  
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <a href="#"><img src="img/logo.png" alt=""></a>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <div class="humberger__menu__widget">
-            <div class="header__top__right__language">
-                <img src="img/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
-                </ul>
-            </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
-            </div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
-                <li><a href="#">Pages</a>
-                    <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
-                    </ul>
-                </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-        <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
-        </div>
-        <div class="humberger__menu__contact">
-            <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
-            </ul>
-        </div>
-    </div>
+
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
@@ -97,7 +42,7 @@
 <?php 
 $sanphamdb= new sanphamdb();
 $listallsanpham=$sanphamdb->getallsanpham();
-echo count($listallsanpham);
+
 if(isset($_GET['idloai']) && !isset($_GET['idloaicon'])){
                
     $listallsanpham=$sanphamdb->getallsanphambyloai($_GET['idloai']);
@@ -140,7 +85,7 @@ if(isset($_GET['idloai']) && !isset($_GET['idloaicon'])){
                       
                       
                         <div class="sidebar__item">
-                           <?php include('sanphammoi.php'); ?> 
+                           <?php include('sanphammoi2.php'); ?> 
                         </div>
                     </div>
                 </div>
@@ -148,7 +93,17 @@ if(isset($_GET['idloai']) && !isset($_GET['idloaicon'])){
 
                     <div class="row">
                     <?php
+                    $danhgiadb=new Danhgia_db();
+
                             foreach($listallsanpham as $sp){
+$listdanhgia=$danhgiadb->getalldanhgiabyidsp($sp->getidsanpham());
+$totalRatings = 0; // Tổng số sao từ đánh giá
+$ratingCount = count($listdanhgia); 
+foreach ($listdanhgia as $danhgia) {
+    $sosao = $danhgia->getsosao();
+    $totalRatings += $sosao;
+}
+$averageRating = $ratingCount > 0 ? $totalRatings / $ratingCount : 0;
                         echo'<div class="col-lg-4 col-md-6 col-sm-6">';
                             $hinhanh=$sanphamdb->gethinhanhbyidsanpham($sp->getidsanpham());
                            echo' <div class="product__item">';
@@ -158,11 +113,16 @@ if(isset($_GET['idloai']) && !isset($_GET['idloaicon'])){
                             echo'    <div class="product__item__pic set-bg" data-setbg="../image/khongtontai.png">';
                            }
                             echo'        <ul class="product__item__pic__hover">';
-                        
+                        if(isset($_SESSION['idtk'])){
                        
                             echo'            <li><a class="add-to-cart-btn" data-spid="'.$sp->getidsanpham().'" href="../control/themvaogiohang.php?sanphamid='.$sp->getidsanpham().'"><i class="fa fa-shopping-cart"></i></a></li>';
-                              echo'      </ul>';
+                        }
+                            echo'      </ul>';
                             echo'    </div>';
+                               echo '<div class="rating">';
+                      echo ' '.$averageRating.'/5 <i class="fa-solid fa-star"  style="color: #FFA500;"></i> ('.$ratingCount.' đánh giá)';
+                      echo '</div>';
+                
                             echo'    <div class="product__item__text">';
                              echo'       <h6><a href="ttsanpham.php?spid='.$sp->getidsanpham().'">'.$sp->gettensanpham().'</a></h6>';
                               echo'      <h5>'.$sp->getgiaban().' VNĐ</h5>';

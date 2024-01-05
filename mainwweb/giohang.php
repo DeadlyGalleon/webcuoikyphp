@@ -3,8 +3,7 @@
 <?php  ?> 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Giỏ Hàng</title>
@@ -148,7 +147,9 @@ echo '<img width="120px" height="80px" src="../image/'.$sanphamdb->gethinhanhbyi
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
                         <a href="shop.php" class="primary-btn cart-btn">Tiếp Tục Mua Sắm</a>
+                        <?php if(count($giohang)>0) { ?> 
                         <a href="dathang.php" class="primary-btn cart-btn">Đặt Hàng</a>
+                        <?php } ?> 
                     </div>
                 </div>
                 <div class="col-lg-6">

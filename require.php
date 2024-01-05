@@ -16,6 +16,8 @@ require('model/giohang.php');
 require('model/giohang_db.php');
 require('model/danhgia.php');
 require('model/danhgia_db.php');
+require('model/thongke_db.php');
+require('model/thongke.php');
 
 
 ?> 

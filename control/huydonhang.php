@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $donhangdb->thaydoitrangthai($iddonhang,$trangthai);
 
-    header('Location: ../web/lichsudonhang.php');
+    header('Location: ../mainwweb/lichsudonhang.php');
     exit();
 }
 ?>

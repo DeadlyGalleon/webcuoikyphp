@@ -1,6 +1,6 @@
 
-     <?php 
-           $sanphammoi = $sanphamdb->getsanphammoi(); // Danh sách cần chia
+<?php 
+           $sanphammoi = $sanphamdb->getsanphammuanhieu(); // Danh sách cần chia
 
            $moi1 = array_slice($sanphammoi, 0, count($sanphammoi) / 2); // Danh sách đầu tiên
            $moi2 = array_slice($sanphammoi, count($sanphammoi) / 2);    // Danh sách thứ hai
@@ -8,7 +8,7 @@
      ?> 
      <div class="latest-product__text">
                     
-                        <h4>Sản Phẩm Mới</h4>
+                        <h4>Sản Phẩm Mua Nhiều</h4>
                       
                     
                       
@@ -23,6 +23,7 @@
                                     </div>
                                     <div class="latest-product__item__text">
                                       <h6><?php echo $sanpham->gettensanpham(); ?> </h6>
+                                      <p>Lần Mua:<?php echo $sanpham->getlanmua() ?> </p>
                                         <span><?php echo $sanpham->getgiaban(); ?> VNĐ </span>
                                     </div>
                                 </a>
@@ -39,6 +40,7 @@
                                                                   </div>
     <div class="latest-product__item__text">
         <h6><?php echo $sanpham->gettensanpham(); ?> </h6>
+        <p>Lần Mua:<?php echo $sanpham->getlanmua() ?> </p>
         <span><?php echo $sanpham->getgiaban(); ?> VNĐ </span>
     </div>
 </a>

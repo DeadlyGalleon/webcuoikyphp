@@ -1,7 +1,11 @@
 
      <?php 
            $sanphammoi = $sanphamdb->getsanphammoi(); // Danh sách cần chia
+if(isset($_GET['idloai']) && isset($_GET['idloaicon'])){
+    $sanphammoi=$sanphamdb->getsanphammoimloaicon($_GET['idloai'],$_GET['idloaicon']);
 
+
+}elseif(isset($_GET['idloai']) && !isset($_GET['idloaicon']))  $sanphammoi=$sanphamdb->getsanphammoiloai($_GET['idloai']);
            $moi1 = array_slice($sanphammoi, 0, count($sanphammoi) / 2); // Danh sách đầu tiên
            $moi2 = array_slice($sanphammoi, count($sanphammoi) / 2);    // Danh sách thứ hai
            $sanphamdb=new sanphamdb();

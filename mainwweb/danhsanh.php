@@ -30,137 +30,58 @@ $moi2 = array_slice($sanphammoi, count($sanphammoi) / 2);    // Danh sách thứ
 
                </div>
                 <div class="col-lg-4 col-md-6">
-                    <div class="latest-product__text">
-                        <h4>Sản Phẩm Bán Chạy</h4>
-                        <br>
-                        <br>
-
-                        <div class="latest-product__slider owl-carousel">
-                            <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                   <?php include('sanphammuanhieu.php'); ?> 
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
                         <h4>Sản phẩm được đánh giá cao</h4>
-                        <br>
-                    
-                        <div class="latest-product__slider owl-carousel">
-                            <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="latest-prdouct__slider__item">
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-1.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-2.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="latest-product__item">
-                                    <div class="latest-product__item__pic">
-                                        <img src="img/latest-product/lp-3.jpg" alt="">
-                                    </div>
-                                    <div class="latest-product__item__text">
-                                        <h6>Crab Pool Security</h6>
-                                        <span>$30.00</span>
-                                    </div>
-                                </a>
-                            </div>
+                  
+                    <?php
+              $sanpham = new sanphamdb();
+              $listid = $sanpham->layhetspid();
+              $danhgiadb = new Danhgia_db();
+              
+              $averageRatings = array();
+              
+              foreach ($listid as $id) {
+                  $listdanhgia = $danhgiadb->getalldanhgiabyidsp($id);
+                  $totalRatings = 0;
+                  $ratingCount = count($listdanhgia);
+                  foreach ($listdanhgia as $danhgia) {
+                      $sosao = $danhgia->getsosao();
+                      $totalRatings += $sosao;
+                  }
+                  $averageRating = $ratingCount > 0 ? $totalRatings / $ratingCount : 0;
+                  $averageRatings[$id] = $averageRating;
+              }
+              
+              // Sắp xếp mảng theo số sao trung bình giảm dần
+              arsort($averageRatings);
+              
+              // Lấy ra 6 sản phẩm có số sao trung bình cao nhất
+              $topProducts = array_slice($averageRatings, 0, 6, true);
+              
+              // Hiển thị thông tin của 6 sản phẩm
+              foreach ($topProducts as $idSanPham => $averageRating) {
+                  $sanPham = $sanpham->getSanPhamById($idSanPham);
+              
+                  echo '<div class="latest-prdouct__slider__item">';
+                  echo '    <a href="ttsanpham.php?spid='.$sanPham->getidsanpham().'" class="latest-product__item">';
+                  echo '        <div class="latest-product__item__pic">';
+                  echo '            <img src="../image/'.$sanphamdb->gethinhanhbyidsanpham($idSanPham)[0]['hinhanh'].'" alt="">';
+                  echo '        </div>';
+                  echo '        <div class="latest-product__item__text">';
+                  echo '            <h6>' . $sanPham->getTenSanPham() . '</h6>';
+                  echo '';
+                  echo '<h6> '.$averageRating.'/5 <i class="fa-solid fa-star"  style="color: #FFA500;"></i></h6>';
+                  echo '';
+                  echo '            <span>'.$sanPham->getgiaban().' VNĐ </span>';
+                  echo '        </div>';
+                  echo '    </a>';
+                  echo '</div>';
+              }
+                            ?>
+                   
                         </div>
                     </div>
                 </div>

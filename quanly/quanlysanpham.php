@@ -47,7 +47,7 @@ input, button, select, textarea {
        
         <div class="container">
         <div class="row"> 
-            <a href="../web">   <button type="submit">Trở Về Trang Chủ</button></a>
+            <a href="../mainwweb">   <button type="submit">Trở Về Trang Chủ</button></a>
            
 <a  href="quanlydanhmuc.php"><button type="submit">Quản lý danh mục</button></a>
 <?php if($taikhoan->getadmin()==1){ ?>
@@ -114,7 +114,7 @@ input, button, select, textarea {
                                     <img width="auto" src="../image/<?php echo $hinhanh[0]['hinhanh'] ?>">
                                 </td>
                                 <td><?php echo $sanpham->gettenloai() ?> </td>
-                                <td><?php echo $sanpham->gettenhang() ?> </td>
+                                <td><?php echo $sanpham->gettenloaicon() ?> </td>
 
                                 
 
@@ -192,10 +192,10 @@ input, button, select, textarea {
                         <label>Hãng Sản Phẩm</label>
                         <select name="brands" class="form-select" aria-label="Default select example">
                           
-                                <?php $hangdb=new hangdb();
-                                $listallhang=$hangdb->getallhang();
-                                foreach($listallhang as $hang){    ?> 
-                                <option value="<?php echo $hang->getidhang() ?>"><?php echo $hang->gettenhang() ?></option>
+                                <?php $loaicondb=new loaicondb();
+                                $listallloaicon=$loaicondb->getallloaicon();
+                                foreach($listallloaicon as $loaicon){    ?> 
+                                <option value="<?php echo $loaicon->getidloaicon() ?>"><?php echo $loaicon->gettenloaicon() ?></option>
                            <?php } ?>
 
                         </select>

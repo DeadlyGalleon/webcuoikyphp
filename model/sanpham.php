@@ -1,6 +1,6 @@
 <?php
 class sanpham {
-    private $idsanpham, $tensanpham, $mota, $hinhanh, $giaban, $loai, $loaicon,$tenloaicon,$tenloai;
+    private $idsanpham, $tensanpham, $mota, $hinhanh, $giaban, $loai, $loaicon,$tenloaicon,$tenloai,$lanmua;
 
     public function __construct() {
         
@@ -19,6 +19,13 @@ class sanpham {
 
     public function setidsanpham($value) {
         $this->idsanpham = $value;
+    }
+    public function getlanmua() {
+        return $this->lanmua;
+    }
+
+    public function setlanmua($value) {
+        $this->lanmua    = $value;
     }
     public function gettenloaicon() {
         return $this->tenloaicon;

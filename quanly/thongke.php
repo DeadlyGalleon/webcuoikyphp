@@ -15,7 +15,7 @@ if($taikhoan->getquanly()==1 || $taikhoan->getadmin()==1){
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Quản Lý đơn hàng</title>
+        <title>Thống Kê</title>
       
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -74,7 +74,10 @@ input, button, select, textarea {
            
            <a href="quanlytaikhoan.php"><button type="submit">Quản lý tài khoản</button></a>
            <?php }?> 
-          
+           <a href="quanlydonhang.php"><button type="submit">Quản lý đơn hàng</button></a>
+           <a href="thongke.php"><button type="submit">Thống Kê</button></a>
+
+           
            </div> 
 
 
@@ -82,18 +85,21 @@ input, button, select, textarea {
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Quản Lý <b>Đơn Hàng</b></h2>
+                            <h2><b>Thống Kê</b></h2>
                         </div>
                       
                     </div>
+
+                    
                 </div>
+                <button ><a href="../control/xuatthongke.php">Xuất Thống kê</a></button>
 
                 
                     <?php 
-                    $donhangdb= new donhangdb();
-                    $listalldonhang= $donhangdb->getalldonhang();
+                    $thongkedb= new thongkedb();
+                    $listallthongke= $thongkedb->getallthongke();
 
-                
+                count($listallthongke);
                 
         
                 ?>
@@ -106,7 +112,7 @@ input, button, select, textarea {
             </div>
 
             <?php
-              foreach ($listalldonhang as $donhang) {
+              foreach ($listallthongke as $thongke) {
                 
                 ?> 
                  <div class="block-container">
@@ -114,61 +120,33 @@ input, button, select, textarea {
 <table cellspacing="0" class="shop_table cart">
                 <thead>
                     <tr>
-                        <th colspan="60">Thông Tin Đơn Hàng</th>
+                        <th colspan="60">Thông Tin Thống Kê</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $taikhoandb=new taikhoandb();
-                $taikhoan=$taikhoandb->gettaikhoan($donhang['thongtindonhang']['idtaikhoan']);
-                    ?> 
+             
                     <tr>
-                        <td>ID Đơn hàng: <?php echo $donhang['thongtindonhang']['iddonhang']; ?></td>
-                        <td>Được đặt bởi: <?php echo $taikhoan->gettentaikhoan() ?> </td> 
-                        <td>Số Điện Thoại: 0<?php echo $donhang['thongtindonhang']['sodienthoai'] ?> </td>
-                        <td>Ngày Đặt hàng: </br> <?php echo $donhang['thongtindonhang']['ngaydat']; ?></td>
-                        <td>Địa chỉ: <?php echo $donhang['thongtindonhang']['diachi']; ?></td>
-                        <td>Trạng Thái: 
-                            
-                            <?php if($donhang['thongtindonhang']['trangthai']===0){
-                                echo('Chưa Xác Nhận');
-
-                        } elseif($donhang['thongtindonhang']['trangthai']===1){
-                            echo('Đã Huỷ');
-
-                        } elseif($donhang['thongtindonhang']['trangthai']===2){
-                            echo('Đã Xác Nhận');
-
-                        }elseif($donhang['thongtindonhang']['trangthai']===3){
-                            echo('Đang Giao');
-                        }else{
-                         echo('Đã Giao');
-                        }
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        ?></td>
-                        <td>Ngày Giao: </br> <?php echo $donhang['thongtindonhang']['ngaygiao'] ?>  </td>
+                        <td>ID thống kê: <?php echo $thongke['thongtinthongke']['idthongke']; ?></td>
+                        <td>Bán Được </br> <?php echo $thongke['thongtinthongke']['banduoc'] ?> đơn hàng   </td>
+                      
+                  
+                        <td>Ngày Xuất: </br> <?php echo $thongke['thongtinthongke']['ngayxuat'] ?>  </td>
                         
                     </tr>
                 </tbody>
             </table>                
 <table cellspacing="0" class="shop_table cart">
+<thead>
+                    <tr>
+                        <th colspan="60">Sản Phẩm Đã Bán</th>
+                    </tr>
+                </thead>
             <thead>
                 <tr>
                 <th class="product-remove">ID</th>
                 <th class="product-thumbnail">Hình Ảnh</th>
                 <th class="product-name">Tên</th>
-                <th class="product-price">Giá</th>
+              
                 <th class="product-quantity">Số Lượng</th>
                 <th class="product-subtotal">Tiền</th>
              
@@ -178,7 +156,7 @@ input, button, select, textarea {
 
 
                 <?php
-                foreach ($donhang['sanphamdonhang'] as $sanpham) {
+                foreach ($thongke['sanphamthongke'] as $sanpham) {
        
 
 
@@ -190,16 +168,14 @@ input, button, select, textarea {
                         </td>
                 
                         <td class="product-thumbnail">
-                            <a href="ttsanpham.php?spid='.$sanpham['idsanpham'].'"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="../image/'.$sanpham['hinhanh'].'"></a>
+                         <img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="../image/'.$sanpham['hinhanh'].'">
                         </td>
                 
                         <td class="product-name">
-                            <a href="single-product.html">'.$sanpham['tensanpham'].'</a> 
+                            '.$sanpham['tensanpham'].'
                         </td>
                 
-                        <td class="product-price">
-                            <span class="amount">'.$sanpham['giacu'].' VND</span> 
-                        </td>
+                   
                 
                         <td class="product-quantity">
         
@@ -209,50 +185,28 @@ input, button, select, textarea {
                     </td>
                 
                         <td class="product-subtotal">
-                            <span class="amount">'.$sanpham['thanhtiengiacu'].' VND</span>
+                            <span class="amount">'.$sanpham['thanhtien'].' VND</span>
                     </tr>
                 </tbody>';
                 }
         echo'
+
         <tfoot>
             <tr class="cart_item">
                 <td class="product-remove"></td>
                 <td class="product-thumbnail"></td>
                 <td class="product-name"></td>
-                <td class="product-price"></td>
-                <td class="product-quantity">Tổng:</td>
+            
+                <td class="product-quantity">Tổng Doanh Thu:</td>
                 <td class="product-subtotal">
-                    <span>'.$donhang['thongtindonhang']['tongtien'].' VND</span>
+                    <span>'.$thongke['thongtinthongke']['doanhthu'].' VND</span>
                 </td>
              
             </tr>
         </tfoot>
         </table>'; 
         
-        if ($donhang['thongtindonhang']['trangthai'] !== 1 && $donhang['thongtindonhang']['trangthai'] !== 4) {
-         
-        ?>
-            <form action="../control/update_trangthai.php" method="post">
-                <input type="hidden" name="iddonhang" value="<?php echo $donhang['thongtindonhang']['iddonhang']; ?>">
-                <h3>Trạng Thái:</h3>  
-                <select name="trangthai">
-                    <option value="0" <?php if ($donhang['thongtindonhang']['trangthai'] === 0) echo 'selected'; ?>>Chưa Xác Nhận</option>
-                    <option value="2" <?php if ($donhang['thongtindonhang']['trangthai'] === 2) echo 'selected'; ?>>Đã Xác Nhận</option>
-                    <option value="3" <?php if ($donhang['thongtindonhang']['trangthai'] === 3) echo 'selected'; ?>>Đang Giao</option>
-                    <option value="4" <?php if ($donhang['thongtindonhang']['trangthai'] === 4) echo 'selected'; ?>>Đã Giao</option>
-                </select>
-                <button type="submit">Lưu</button>
-            </form>
-        <?php
-        }else{
-            
-            if($donhang['thongtindonhang']['trangthai'] == 4){
-            echo "Đơn Hàng Đã Giao!";
-        
-        }elseif($donhang['thongtindonhang']['trangthai']==1){
-                echo 'Đơn hàng đã huỷ!';
-            }
-        }
+   
         ?>
 
 

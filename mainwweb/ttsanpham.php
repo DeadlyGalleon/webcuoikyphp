@@ -4,8 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Chi Tiết Sản Phẩm</title>
@@ -65,6 +64,14 @@ $listdanhgia = $danhgiadb->getalldanhgiabyidsp($_GET['spid']);
 
 $user = new taikhoandb();
 $username = $user->getusernamebyid($_GET['spid']);
+$totalRatings = 0; // Tổng số sao từ đánh giá
+$ratingCount = count($listdanhgia); // Số lượng đánh giá
+// Lặp qua mảng $listdanhgia
+foreach ($listdanhgia as $binhluan) {
+    $sosao = $binhluan->getsosao();
+    $totalRatings += $sosao;
+}
+$averageRating = $ratingCount > 0 ? $totalRatings / $ratingCount : 0;
 
 }
 
@@ -124,26 +131,31 @@ foreach($listHinhAnhChiTiet as $hinhanh){
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
                         <h3><?php echo $ttsanpham->gettensanpham() ?> </h3>
+                        <p>Lần Mua: <?php echo $ttsanpham->getlanmua(); ?> </p> 
                       <?php 
-                      echo'<div>'.$ttsanpham->gettensanpham().'</div>';
-                      echo'  <div class="product__details__price">Giá bán: '.$ttsanpham->getgiaban().'</div> ';
+                      echo '<div class="rating">';
+                      echo ' '.$averageRating.'/5 <i class="fa-solid fa-star"  style="color: #FFA500;"></i>';
+                      echo '</div>';
+                      echo '('.$ratingCount.' đánh giá)';
+                    
+                      echo'  <div class="product__details__price">Giá bán: '.$ttsanpham->getgiaban().' VNĐ</div> ';
                       echo '<p></p>';
-                      echo'<div class="product__details__quantity">';
-                      echo'  <div class="quantity">';
-                      echo'      <div class="pro-qty">';
-                      echo'          <input type="text" value="1">';
-                        echo'    </div>';
-                     echo'   </div>';
-                     echo'    </div>';
-                     echo'    <a href="#" class="primary-btn">ADD TO CARD</a>';
-                     echo'    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>';
+if(isset($_SESSION['idtk'])){
+                     echo '<div class="product__details__quantity">';
+    echo '<div class="quantity">';
+    echo '<div class="pro-qty">';
+    echo '<input type="text" value="1">';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+    echo '<button class="add-to-cart-btn" data-spid="'.$ttsanpham->getidsanpham().'">Thêm vào Giỏ hàng</button>';
+}else{
+    echo 'Hãy <a href="dangnhap.php">Đăng Nhập</a> Để Mua Hàng';
+}
+
+
                      echo'    <ul>';
-                     echo'         <div class="share">';
-                     echo'             <a href="#"><i class="fa fa-facebook"></i></a>';
-                                echo'             <a href="#"><i class="fa fa-twitter"></i></a>';
-                                echo'            <a href="#"><i class="fa fa-instagram"></i></a>';
-                                echo'            <a href="#"><i class="fa fa-pinterest"></i></a>';
-                                echo'        </div>';
+                    
                                 echo'     </li>';
                                 echo'     </ul>';
                                 echo'    </div>';
@@ -192,16 +204,6 @@ foreach ($listdanhgia as $binhluan) {
 $averageRating = $ratingCount > 0 ? $totalRatings / $ratingCount : 0;
 // Hiển thị số sao trung bình dưới dạng ngôi sao và nửa ngôi sao
 echo '<div class="rating">';
-// for ($i = 1; $i <= 5; $i++) {
-//     // Hiển thị ngôi sao đánh giá
-//     if ($i <= floor($averageRating)) {
-//         echo '<i class="fa-solid fa-star"  style="color: #FFA500;"></i>'; // Ngôi sao hoàn toàn
-//     } elseif ($i - 0.5 <= $averageRating) {
-//         echo '<i class="fa-solid fa-star-half-stroke" style="color:#FFA500;"></i>'; // Nửa ngôi sao
-//     } else {
-//         echo '<i class="fa-regular fa-star" style="color:#FFA500;"></i>'; // Ngôi sao rỗng
-//     }
-// }
 echo ' '.$averageRating.'/5 <i class="fa-solid fa-star"  style="color: #FFA500;"></i>';
 echo '</div>';
   //Đóng hiển thị số sao trung bình
@@ -361,13 +363,17 @@ echo'</form>';
             <div class="row">
             <?php
             foreach($listsanphamlienquan as $sanphamc){
+                $listHinhAnhChiTiet1=$sanphamdb->gethinhanhbyidsanpham($sanphamc->getidsanpham());
+
             echo' <div class="col-lg-3 col-md-4 col-sm-6">';
             echo' <div class="product__item">';
-             echo'    <div class="product__item__pic set-bg" data-setbg="../image/'.$sanphamc->gethinhanh().'">';
+             echo'    <div class="product__item__pic set-bg" data-setbg="../image/'.$listHinhAnhChiTiet1[0]['hinhanh'].'">';
              echo'        <ul class="product__item__pic__hover">';
-              echo'           <li><a href="#"><i class="fa fa-heart"></i></a></li>';
-              echo'           <li><a href="#"><i class="fa fa-retweet"></i></a></li>';
-              echo'           <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>';
+  
+             if(isset($_SESSION['idtk'])){
+                       
+                echo'            <li><a class="add-to-cart-btn" data-spid="'.$sanphamc->getidsanpham().'" href="#"><i class="fa fa-shopping-cart"></i></a></li>';
+            }
               echo'       </ul>';
               echo'   </div>';
               echo'   <div class="product__item__text">';
@@ -408,8 +414,42 @@ echo'</form>';
     var form = document.getElementById("editForm");
     form.classList.add("hidden");
   }
+
+
  
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.add-to-cart-btn').click(function(event) {
+        event.preventDefault();
+        var spid = $(this).data('spid'); // Lấy ID sản phẩm từ thuộc tính data
+        var quantity = $(this).siblings('.product__details__quantity').find('.pro-qty input').val();
+
+        // Gửi yêu cầu AJAX đến tệp xử lý PHP
+        $.ajax({
+            type: 'GET',
+            url: '../control/themvaogiohang.php',
+            data: {
+                sanphamid: spid,
+                soluong: quantity
+            },
+            success: function(response) {
+                // Hiển thị thông báo khi thêm sản phẩm vào giỏ hàng thành công
+                console.log(quantity);
+                alert('Sản phẩm đã được thêm vào giỏ hàng!' + quantity);
+            },
+            error: function() {
+                // Hiển thị thông báo khi có lỗi xảy ra
+                alert('Đã xảy ra lỗi khi thêm sản phẩm vào giỏ hàng.');
+            }
+        });
+    });
+});
+
+</script>
+
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>
