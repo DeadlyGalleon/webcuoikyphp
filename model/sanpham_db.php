@@ -142,7 +142,7 @@ public function getallsanpham(){
                 $db = database::getDB();
             
                 // Using prepared statement to prevent SQL injection
-                $query = 'SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota, sanpham.hinhanh, sanpham.giaban, sanpham.loai, sanpham.loaicon, loai.tenloai, loaicon.tenloaicon
+                $query = 'SELECT sanpham.lanmua, sanpham.idsanpham, sanpham.tensanpham, sanpham.mota, sanpham.hinhanh, sanpham.giaban, sanpham.loai, sanpham.loaicon, loai.tenloai, loaicon.tenloaicon
                           FROM sanpham
                           INNER JOIN loai ON loai.idloai = sanpham.loai
                           INNER JOIN loaicon ON sanpham.loaicon = loaicon.idloaicon
@@ -166,7 +166,7 @@ public function getallsanpham(){
                         $sanpham->setloai($row['loai']);
                         $sanpham->setloaicon($row['loaicon']);
                         $sanpham->settenloai($row['tenloai']);
-                        $sanpham->setlanmua($row['lanmua']);
+               
                         $listsanpham[] = $sanpham;
                     }
             
@@ -371,7 +371,7 @@ public function getallsanphambyloai($loai) {
         $sanpham->setloai($row['loai']);
         $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->setlanmua($row['lanmua']);
+      
         $listsanpham[] = $sanpham;
     }
     
