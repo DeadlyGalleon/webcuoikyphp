@@ -12,10 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 try {
     //code...
 $donhangdb->dathang($diachi,$sodienthoai);
-unset($_SESSION['giohang']);
  echo ' <script>';
   echo '  alert("Đặt Hàng Thành Công!");';
-  echo "  window.location.href = '../web/';";
+  echo "  window.location.href = '../mainwweb/';";
 
      echo '    </script>;';
 } catch (\Throwable $th) {

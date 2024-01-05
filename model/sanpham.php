@@ -1,6 +1,6 @@
 <?php
 class sanpham {
-    private $idsanpham, $tensanpham, $mota, $hinhanh, $giaban, $loai, $hang,$tenhang,$tenloai;
+    private $idsanpham, $tensanpham, $mota, $hinhanh, $giaban, $loai, $loaicon,$tenloaicon,$tenloai;
 
     public function __construct() {
         
@@ -10,7 +10,7 @@ class sanpham {
         $this->hinhanh = '';
         $this->giaban = 0;
         $this->loai=null;
-        $this->hang=0;
+        $this->loaicon=0;
     }
 
     public function getidsanpham() {
@@ -20,12 +20,12 @@ class sanpham {
     public function setidsanpham($value) {
         $this->idsanpham = $value;
     }
-    public function gettenhang() {
-        return $this->tenhang;
+    public function gettenloaicon() {
+        return $this->tenloaicon;
     }
 
-    public function settenhang($value) {
-        $this->tenhang = $value;
+    public function settenloaicon($value) {
+        $this->tenloaicon = $value;
     }
     public function gettenloai() {
         return $this->tenloai;
@@ -75,11 +75,11 @@ class sanpham {
         $this->loai=$value;
     }
 
-    public function gethang() {
-        return $this->hang;
+    public function getloaicon() {
+        return $this->loaicon;
      }
-     public function sethang($value){
-         $this->hang=$value;
+     public function setloaicon($value){
+         $this->loaicon=$value;
      }
 
    

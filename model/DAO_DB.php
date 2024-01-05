@@ -19,14 +19,14 @@ class dao {
     $hinhanh = $sanpham->gethinhanh();
     $giaban = $sanpham->getgiaban();
     $loai = $sanpham->getloai();
-    $hang = $sanpham->gethang();
+    $loaicon = $sanpham->getloaicon();
 
     try {
         $db = database::getDB();
 
         // Sử dụng Prepared Statements để thêm sản phẩm vào cơ sở dữ liệu
-        $query = "INSERT INTO `sanpham` (`tensanpham`, `mota`, `hinhanh`, `giaban`, `loai`, `hang`) 
-                  VALUES (:tensp, :mota, :hinhanh, :giaban, :loai, :hang)";
+        $query = "INSERT INTO `sanpham` (`tensanpham`, `mota`, `hinhanh`, `giaban`, `loai`, `loaicon`) 
+                  VALUES (:tensp, :mota, :hinhanh, :giaban, :loai, :loaicon)";
         $stmt = $db->prepare($query);
 
         // Gắn các giá trị vào truy vấn sử dụng bindParam
@@ -35,7 +35,7 @@ class dao {
         $stmt->bindParam(':hinhanh', $hinhanh);
         $stmt->bindParam(':giaban', $giaban);
         $stmt->bindParam(':loai', $loai);
-        $stmt->bindParam(':hang', $hang);
+        $stmt->bindParam(':loaicon', $loaicon);
 
         // Thực thi truy vấn
         if ($stmt->execute()) {
@@ -59,13 +59,13 @@ public function suasanpham($sanphamc) {
     $mota = $sanpham->getmota();
     $hinhanh = $sanpham->gethinhanh();
     $loai = $sanpham->getloai();
-    $hang = $sanpham->gethang();
+    $loaicon = $sanpham->getloaicon();
 
     try {
         $db = database::getDB();
 
         // Sử dụng Prepared Statements để cập nhật thông tin sản phẩm trong cơ sở dữ liệu
-        $query = "UPDATE `sanpham` SET `tensanpham` = :tensp, `mota` = :mota, `hinhanh` = :hinhanh, `loai` = :loai, `hang` = :hang WHERE `sanpham`.`idsanpham` = :idsanpham";
+        $query = "UPDATE `sanpham` SET `tensanpham` = :tensp, `mota` = :mota, `hinhanh` = :hinhanh, `loai` = :loai, `loaicon` = :loaicon WHERE `sanpham`.`idsanpham` = :idsanpham";
         $stmt = $db->prepare($query);
 
         // Gắn các giá trị vào truy vấn sử dụng bindParam
@@ -74,7 +74,7 @@ public function suasanpham($sanphamc) {
         $stmt->bindParam(':mota', $mota);
         $stmt->bindParam(':hinhanh', $hinhanh);
         $stmt->bindParam(':loai', $loai);
-        $stmt->bindParam(':hang', $hang);
+        $stmt->bindParam(':loaicon', $loaicon);
 
         // Thực thi truy vấn
         if ($stmt->execute()) {
@@ -138,7 +138,7 @@ $giohang=$_SESSION['giohang'];
     $mota = $sanpham->getmota();
     $hinhanh = $sanpham->gethinhanh();
     $loai = $sanpham->getloai();
-    $hang = $sanpham->gethang();
+    $loaicon = $sanpham->getloaicon();
     $soluong=1;
 
     try {

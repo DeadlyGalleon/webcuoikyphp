@@ -9,22 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sanpham->settensanpham($_POST['name']);
     }
 
-    // Kiểm tra và xử lý file ảnh
-    if (isset($_FILES['image'])) {
-        $hinhanh = $_FILES['image']['name'];
-        $sanpham->sethinhanh($hinhanh);
-        $targetDirectory = "../image/"; // Thay đổi đường dẫn thư mục lưu trữ file ảnh
-        $targetFile = $targetDirectory . basename($_FILES["image"]["name"]);
-echo $targetFile;
-        // Di chuyển file ảnh vào thư mục đích
-        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-            // Thành công: file ảnh đã được di chuyển và sẵn sàng để lưu vào cơ sở dữ liệu
-        } else {
-            // Xử lý lỗi khi di chuyển file ảnh
-            echo "Sorry, there was an error uploading your file.";
-        }
-    }
-
 
  
     
@@ -48,23 +32,23 @@ echo $targetFile;
 
     // Kiểm tra và xử lý hãng sản phẩm
     if (isset($_POST['brands'])) {
-        $sanpham->sethang($_POST['brands']);
+        $sanpham->setloaicon($_POST['brands']);
     }
 
     try {
         $dao = new dao();
      $id_sanpham=   $dao->themsanpham($sanpham);
-        if (isset($_FILES['imagechitiet'])) {
+        if (isset($_FILES['image'])) {
             $db= database::getDB();
             
-            $total_images_detail = count($_FILES['imagechitiet']['name']);
+            $total_images_detail = count($_FILES['image']['name']);
         
      
         
             // Lưu hình ảnh chi tiết vào bảng hinhanh
             for ($j = 0; $j < $total_images_detail; $j++) {
-                $file_name_detail = $_FILES['imagechitiet']['name'][$j];
-                $file_tmp_detail = $_FILES['imagechitiet']['tmp_name'][$j];
+                $file_name_detail = $_FILES['image']['name'][$j];
+                $file_tmp_detail = $_FILES['image']['tmp_name'][$j];
         
                 $query_detail = "INSERT INTO `hinhanh` (`idsanpham`, `hinhanh`) VALUES (:idsanpham, :hinhanh)";
                 $statement_detail = $db->prepare($query_detail);

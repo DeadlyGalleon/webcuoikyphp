@@ -47,7 +47,7 @@ input, button, select, textarea {
        
         <div class="container">
         <div class="row"> 
-            <a href="../web">   <button type="submit">Trở Về Trang Chủ</button></a>
+            <a href="../mainwweb">   <button type="submit">Trở Về Trang Chủ</button></a>
            
 <a  href="quanlydanhmuc.php"><button type="submit">Quản lý danh mục</button></a>
 <?php if($taikhoan->getadmin()==1){ ?>
@@ -96,7 +96,7 @@ input, button, select, textarea {
                             <th>Tên</th>
                             <th>Hình Ảnh</th>
                             <th>Loại</th>
-                            <th>Hãng</th>
+                            <th>Loại Con</th>
                             <th>Giá</th>
                         
                             <th>Hành Động</th>
@@ -104,16 +104,17 @@ input, button, select, textarea {
                     </thead>
                     
                     <tbody>
-                        <?php foreach($listallsanpham as $sanpham){ ?>
+                        <?php foreach($listallsanpham as $sanpham){ ?>  
                             <tr>
                                
                                 <td><?php echo $sanpham->getidsanpham() ?> </td>
                                 <td><?php echo $sanpham->gettensanpham() ?> </td>
                                 <td>
-                                    <img width="auto" src="../image/<?php echo $sanpham->gethinhanh() ?>">
+                                    <?php $hinhanh=$sanphamdb->gethinhanhbyidsanpham($sanpham->getidsanpham()); ?> 
+                                    <img width="auto" src="../image/<?php echo $hinhanh[0]['hinhanh'] ?>">
                                 </td>
                                 <td><?php echo $sanpham->gettenloai() ?> </td>
-                                <td><?php echo $sanpham->gettenhang() ?> </td>
+                                <td><?php echo $sanpham->gettenloaicon() ?> </td>
 
                                 
 
@@ -162,12 +163,15 @@ input, button, select, textarea {
                         <input name="name" type="text" class="form-control" required>
                     </div>
                    <div class="form-group">
-    <label>Hình Ảnh</label>
-    <input name="image" type="file" class="form-control-file">
+
+                        <label>Hình Ảnh</label>
+                        <input name="image[]" type="file" class="form-control-file" multiple>
+
+                        Hình Ảnh:
+    <div class="edit-images">
+   
+    
 </div>
-<div class="form-group">
-                        <label>Hình Ảnh Chi Tiết</label>
-                        <input name="imagechitiet[]" type="file" class="form-control-file" multiple>
                     </div>
 
                     <div class="form-group">
@@ -191,13 +195,13 @@ input, button, select, textarea {
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Hãng Sản Phẩm</label>
+                        <label>Loại Con</label>
                         <select name="brands" class="form-select" aria-label="Default select example">
                           
-                                <?php $hangdb=new hangdb();
-                                $listallhang=$hangdb->getallhang();
-                                foreach($listallhang as $hang){    ?> 
-                                <option value="<?php echo $hang->getidhang() ?>"><?php echo $hang->gettenhang() ?></option>
+                                <?php $loaicondb=new loaicondb();
+                                $listallloaicon=$loaicondb->getallloaicon();
+                                foreach($listallloaicon as $loaicon){    ?> 
+                                <option value="<?php echo $loaicon->getidloaicon() ?>"><?php echo $loaicon->gettenloaicon() ?></option>
                            <?php } ?>
 
                         </select>
@@ -242,6 +246,30 @@ input, button, select, textarea {
 
         </script>
         <script src="js/ajax.js"></script>
+        <script>
+            document.querySelector('input[name="image[]"]').addEventListener('change', function(event) {
+    var editImagesDiv = document.querySelector('.edit-images');
+    editImagesDiv.innerHTML = ''; // Xóa bỏ hình ảnh cũ trước khi thêm hình ảnh mới
+
+    var files = event.target.files;
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!file.type.match('image.*')) {
+            continue;
+        }
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+            var img = document.createElement('img');
+            img.src = event.target.result;
+            img.alt = 'Edited Image';
+            editImagesDiv.appendChild(img); // Thêm hình ảnh vào vùng hiển thị hình ảnh sẽ được sửa
+        }
+
+        reader.readAsDataURL(file);
+    }
+});
+        </script>
         
         
     <script src="js/manager.js" type="text/javascript"></script>

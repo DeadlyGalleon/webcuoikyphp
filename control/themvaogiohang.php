@@ -31,7 +31,12 @@ if($sanpham->getIdsanphamgh()==$sanpham_id){
 }
 
     if (!$sanpham_exist) {
-        // Sản phẩm chưa tồn tại trong giỏ hàng, thêm sản phẩm mới
+        $hinhanh=$sanphamdb->gethinhanhbyidsanpham($sanpham_id);
+        if(count($hinhanh)>0){
+        $sanpham_info->sethinhanh($hinhanh[0]['hinhanh']);
+        }else{
+            $sanpham_info->sethinhanh('khongtontai.png');
+        }
       $giohangdb->themgiohangvaocoso($idtk,$sanpham_info->getidsanpham(),$sanpham_info->gettensanpham(),$sanpham_info->gethinhanh(),1,$sanpham_info->getgiaban(),$sanpham_info->getgiaban());
 
 

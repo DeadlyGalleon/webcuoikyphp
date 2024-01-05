@@ -85,9 +85,8 @@ input, button, select, textarea {
                 $sanphamdb=new sanphamdb();
                
                 $listallsanpham=$sanphamdb->getallsanphamdesc();
-                if(isset($_get['txt']))
-                
-                { $listallsanpham=$sanphamdb->getsanphambyName($_get['txt']);}
+
+                if(isset($_POST['txt'])){ $listallsanpham=$sanphamdb->getsanphambyName($_POST['txt']);}
                 ?> 
                 <table class="table table-striped table-hover">
                     <thead>
@@ -111,7 +110,8 @@ input, button, select, textarea {
                                 <td><?php echo $sanpham->getidsanpham() ?> </td>
                                 <td><?php echo $sanpham->gettensanpham() ?> </td>
                                 <td>
-                                    <img width="auto" src="../image/<?php echo $sanpham->gethinhanh() ?>">
+                                    <?php $hinhanh=$sanphamdb->gethinhanhbyidsanpham($sanpham->getidsanpham()); ?> 
+                                    <img width="auto" src="../image/<?php echo $hinhanh[0]['hinhanh'] ?>">
                                 </td>
                                 <td><?php echo $sanpham->gettenloai() ?> </td>
                                 <td><?php echo $sanpham->gettenhang() ?> </td>
@@ -163,12 +163,9 @@ input, button, select, textarea {
                         <input name="name" type="text" class="form-control" required>
                     </div>
                    <div class="form-group">
-    <label>Hình Ảnh</label>
-    <input name="image" type="file" class="form-control-file">
-</div>
-<div class="form-group">
-                        <label>Hình Ảnh Chi Tiết</label>
-                        <input name="imagechitiet[]" type="file" class="form-control-file" multiple>
+
+                        <label>Hình Ảnh</label>
+                        <input name="image[]" type="file" class="form-control-file" multiple>
                     </div>
 
                     <div class="form-group">

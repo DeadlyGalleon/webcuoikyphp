@@ -4,6 +4,7 @@ class DanhGia {
     public $idsp;
     public $sosao;
     public $binhluan;
+    public $ngaygio;
 
     // public function __construct($iduser, $idsp, $sosao, $binhluan) {
     //     $this->iduser = '11';
@@ -42,6 +43,13 @@ class DanhGia {
 
     public function setBinhLuan($binhluan) {
         $this->binhluan = $binhluan;
+    }
+    public function getNgaygio() {
+        return $this->ngaygio;
+    }
+
+    public function setNgaygio($ngaygio) {
+        $this->ngaygio = $ngaygio;
     }
 
     // Các phương thức khác của lớp DanhGia

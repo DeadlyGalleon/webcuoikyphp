@@ -2,35 +2,6 @@
 session_start();
 require('../require.php');
 
-// Kiểm tra xử lý dữ liệu khi có POST request
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $sanphamdb = new sanphamdb();
-
-    // Lấy dữ liệu từ biểu mẫu
-    $idSanPham = $_POST['spid'];
-    $tenSanPham = $_POST['name'];
-    $giaBan = $_POST['price'];
-    $moTa = $_POST['mota'];
-    $loaiSanPham = $_POST['category'];
-    $hangSanPham = $_POST['brand'];
-
-    // Tạo một đối tượng sản phẩm với dữ liệu mới
-    $sanPhamUpdate = new sanpham();
-    $sanPhamUpdate->setidsanpham($idSanPham);
-    $sanPhamUpdate->settensanpham($tenSanPham);
-    $sanPhamUpdate->setgiaban($giaBan);
-    $sanPhamUpdate->setmota($moTa);
-    $sanPhamUpdate->setloai($loaiSanPham);
-    $sanPhamUpdate->sethang($hangSanPham);
-
-  
-  
-        header('Location: ../quanly/');
-        exit();
-    } else {
-        // Xử lý lỗi nếu cập nhật thông tin sản phẩm không thành công
-        echo "Có lỗi xảy ra trong quá trình cập nhật thông tin sản phẩm.";
-    }
 
 ?>
 
@@ -72,8 +43,9 @@ $sanpham=$sanphamdb->getsanphambyid($_GET['spid']);
         <div class="container">
            <div id="SuaSanPhamForm" >
             <div class="modal-dialog">
+            <form  action="../control/suasanpham.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-content">
-                    <form  action="../control/suasanpham.php" method="POST" enctype="multipart/form-data">
+                 
                         <div class="modal-header">						
                             <h4 class="modal-title">Sửa Sản Phẩm</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -88,82 +60,27 @@ $sanpham=$sanphamdb->getsanphambyid($_GET['spid']);
                                 <input value="<?php echo $sanpham->gettensanpham() ?>" name="name" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
-    <label>Hình Ảnh</label>
-    <img src="../image/<?php echo $sanpham->gethinhanh(); ?>" id="previewImage" alt="Current Image" class="preview-image">
-    <input name="new_image" type="file" class="form-control-file" id="newImageInput">
-</div>
-<div class="form-group">
-    <label>Hình Ảnh Chi Tiết Hiện Có</label>
-    <div class="current-images">
-        <?php
-        // Lấy danh sách hình ảnh chi tiết hiện có của sản phẩm
-        $listChiTietHienCo = $sanphamdb->gethinhanhbyidsanpham($sanpham->getidsanpham());
 
-        foreach ($listChiTietHienCo as $hinhAnh) {
-            echo '<img src="../image/' . $hinhAnh['hinhanh']. '" width="100" height="100" alt="Image">';
-        }
-        ?>
-    </div>
+                            Hình ảnh Hiện Tại
+                            <div class="current-images">
+    <?php
+   $hinhanhhientai=$sanphamdb->gethinhanhbyidsanpham($sanpham->getidsanpham());
+    foreach ($hinhanhhientai as $hinhanh) {
+        echo '<img src="../image/' .$hinhanh['hinhanh']. '" alt="Current Image">';
+    }
+    ?>
 </div>
 
-<div class="form-group">
-    <label>Hình Ảnh Chi Tiết Mới</label>
-    <input name="imagechitiet[]" type="file" class="form-control-file" multiple>
+
+    <label>Chọn Hình Ảnh Mới</label>
+    <input name="image[]" type="file" class="form-control-file" multiple>
+
+    Hình Ảnh Mới:
+    <div class="edit-images">
+   
+    
 </div>
-<script>
-    document.getElementById('newImageInput').addEventListener('change', function() {
-        var input = this;
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('previewImage').setAttribute('src', e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-
-        var files = input.files;
-        var imagesDiv = document.querySelector('.current-images');
-
-        for (var i = 0; i < files.length; i++) {
-            var image = document.createElement('img');
-            image.src = URL.createObjectURL(files[i]);
-            image.width = 100;
-            image.height = 100;
-            image.alt = 'Image';
-            imagesDiv.appendChild(image);
-        }
-    });
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-    document.getElementById('newImageInput').addEventListener('change', function() {
-        var input = this;
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById('previewImage').setAttribute('src', e.target.result);
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
-    });
-</script>
+</div>
 
                            
                            <div class="form-group">
@@ -178,8 +95,8 @@ $sanpham=$sanphamdb->getsanphambyid($_GET['spid']);
                                 <?php 
                                 $loaidb=new loaidb();
                                 $listallloai=$loaidb->getallloai();
-                                $hangdb=new hangdb();
-                                $listallhang=$hangdb->getallhang();
+                                $loaicondb=new loaicondb();
+                                $listallloaicon=$loaicondb->getallloaicon();
                                 ?> 
                                 <textarea   name="mota" class="form-control" required><?php echo  $sanpham->getmota(); ?></textarea>
                             </div>
@@ -200,29 +117,30 @@ $sanpham=$sanphamdb->getsanphambyid($_GET['spid']);
 </div>
 
 <div class="form-group">
-    <label>Hãng Sản Phẩm</label>
+    <label>Loại Con</label>
     <select name="brand" class="form-select" aria-label="Default select example">
         <?php 
         // Lấy thông tin hãng sản phẩm của sản phẩm hiện tại
-        $currentBrandName = $sanpham->gettenhang(); // Lấy tên hãng sản phẩm của sản phẩm hiện tại
+        $hanghientai = $sanpham->gettenloaicon(); // Lấy tên hãng sản phẩm của sản phẩm hiện tại
 
-        foreach ($listallhang as $hang) {
-            $selected = ($hang->gettenhang() == $currentBrandName) ? "selected" : "";
+        foreach ($listallloaicon as $loaicon) {
+            $selected = ($loaicon->gettenloaicon() == $hanghientai) ? "selected" : "";
         ?> 
-            <option value="<?php echo $hang->getidhang(); ?>" <?php echo $selected; ?>><?php echo $hang->gettenhang(); ?></option>
+            <option value="<?php echo $loaicon->getidloaicon(); ?>" <?php echo $selected; ?>><?php echo $loaicon->gettenloaicon(); ?></option>
         <?php } ?> 
     </select>
 </div>
-                            </div>
-
+                
+                        </div>
                         </div>
                         <div class="modal-footer">
-                            <a href="quanlysanpham.php">  <input type="button" class="btn btn-default" data-dismiss="modal" value="Quay Về"></a>
+                            <a href="../quanly/">  <input type="button" class="btn btn-default" data-dismiss="modal" value="Quay Về"></a>
                             <input type="submit" class="btn btn-success" value="Sửa">
                         </div>
-                    </form>
+                        </form>
                 </div>
             </div>
+        </div>
            
       
         <!-- Edit Modal HTML -->
@@ -250,6 +168,32 @@ $sanpham=$sanphamdb->getsanphambyid($_GET['spid']);
 
 
     
+
+</script>
+<script>
+    // Đoạn mã JavaScript để hiển thị hình ảnh sẽ được sửa khi người dùng chọn hình ảnh từ input[type=file]
+document.querySelector('input[name="image[]"]').addEventListener('change', function(event) {
+    var editImagesDiv = document.querySelector('.edit-images');
+    editImagesDiv.innerHTML = ''; // Xóa bỏ hình ảnh cũ trước khi thêm hình ảnh mới
+
+    var files = event.target.files;
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (!file.type.match('image.*')) {
+            continue;
+        }
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+            var img = document.createElement('img');
+            img.src = event.target.result;
+            img.alt = 'Edited Image';
+            editImagesDiv.appendChild(img); // Thêm hình ảnh vào vùng hiển thị hình ảnh sẽ được sửa
+        }
+
+        reader.readAsDataURL(file);
+    }
+});
 
 </script>
         

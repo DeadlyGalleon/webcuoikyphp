@@ -119,7 +119,10 @@ $db = database::getDB();
 
 $idtaikhoan = $_SESSION['idtk'];
 $tongtien = 0; 
+$giohangdb=new giohangdb();
+$sanphamdb=new sanphamdb();
 
+$giohang=$giohangdb->laygiohang($idtaikhoan); 
 
 $sql_donhang = "INSERT INTO donhang (idtaikhoan, tongtien, ngaydat, diachi, ngaygiao,sodienthoai, trangthai) VALUES ('$idtaikhoan', '$tongtien', NOW(), '$diachi', '','$sodienthoai', 0)";
 
@@ -127,15 +130,21 @@ if ($db->exec($sql_donhang)) {
     $iddonhang = $db->lastInsertId();
 
    
-    if (isset($_SESSION['giohang']) && !empty($_SESSION['giohang'])) {
-        foreach ($_SESSION['giohang'] as $key => $sanpham) {
-            $idsanpham = $sanpham['idsanpham']; 
-            $tensanpham=$sanpham['tensanpham'];
-            $hinhanh=$sanpham['hinhanh'];
-            $giacu = $sanpham['giaban']; 
-            $soluong = $sanpham['soluong']; 
-            $thanhtiengiacu = $sanpham['thanhtien']; 
-$tongtien+=  $sanpham['thanhtien'];
+  
+        foreach ($giohang as  $sanpham) {
+            $idsanpham = $sanpham->getIdsanphamgh();
+            $tensanpham=$sanpham->getTensanphamgh();
+            $hinhanh=$sanphamdb->gethinhanhbyidsanpham($idsanpham);
+            if(count($hinhanh)>0){
+                $hinhanh=$hinhanh[0]['hinhanh'];
+            }else{
+                $hinhanh=$sanpham->getHinhanhgh();
+            }
+
+            $giacu = $sanpham->getGiabangh();
+            $soluong = $sanpham->getSoluonggh(); 
+            $thanhtiengiacu = $sanpham->getThanhtiengh();
+$tongtien+=  $sanpham->getThanhtiengh();
          
             $sql_sanpham_donhang = "INSERT INTO sanphamdonhang (iddonhang, idsanpham,tensanpham,hinhanh, giacu, soluong, thanhtiengiacu) VALUES ('$iddonhang', '$idsanpham','$tensanpham','$hinhanh', '$giacu', '$soluong', '$thanhtiengiacu')";
 
@@ -145,8 +154,10 @@ $tongtien+=  $sanpham['thanhtien'];
         }
     $querry=  'UPDATE `donhang` SET `tongtien` = '.$tongtien.' WHERE `donhang`.`iddonhang` = '.$iddonhang.'';
     $db->query($querry);
+    $querry= 'DELETE FROM `giohang` WHERE idtaikhoan = '.$idtaikhoan.'';
+    $db->query($querry);
        
-    }
+    
 } else {
     echo "Lỗi khi thêm đơn hàng!";
 }

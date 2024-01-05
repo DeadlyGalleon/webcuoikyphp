@@ -2,12 +2,12 @@
 class sanphamdb{
  public function getallsanphamsb($s,$b){
 $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang  LIMIT '.$s.' OFFSET '.$b.'';
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon  LIMIT '.$s.' OFFSET '.$b.'';
 $result = $db->query($querry);
 $listsanpham=array();
 
@@ -19,9 +19,9 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 $listsanpham[]=$sanpham;
 }
 return $listsanpham;
@@ -29,12 +29,12 @@ return $listsanpham;
 
 public function getallsanpham(){
     $db = database::getDB();
-    $querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+    $querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
     FROM sanpham
                       INNER JOIN loai
                           ON loai.idloai = sanpham.loai
-                             INNER JOIN hang
-                             on sanpham.hang = hang.idhang ';
+                             INNER JOIN loaicon
+                             on sanpham.loaicon = loaicon.idloaicon ';
     $result = $db->query($querry);
     $listsanpham=array();
     
@@ -46,9 +46,9 @@ public function getallsanpham(){
             $sanpham->sethinhanh($row['hinhanh']);
             $sanpham->setgiaban($row['giaban']);
             $sanpham->setloai($row['loai']);
-            $sanpham->sethang($row['hang']);
+            $sanpham->setloaicon($row['loaicon']);
             $sanpham->settenloai($row['tenloai']);
-            $sanpham->settenhang($row['tenhang']);
+            $sanpham->settenloaicon($row['tenloaicon']);
     $listsanpham[]=$sanpham;
     }
     return $listsanpham;
@@ -56,12 +56,12 @@ public function getallsanpham(){
 
     public function getsanphammoi(){
         $db = database::getDB();
-        $querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+        $querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
         FROM sanpham
                           INNER JOIN loai
                               ON loai.idloai = sanpham.loai
-                                 INNER JOIN hang
-                                 on sanpham.hang = hang.idhang order by sanpham.idsanpham desc limit 6 offset 0 '  ;
+                                 INNER JOIN loaicon
+                                 on sanpham.loaicon = loaicon.idloaicon order by sanpham.idsanpham desc limit 6 offset 0 '  ;
         $result = $db->query($querry);
         $listsanpham=array();
         
@@ -73,9 +73,9 @@ public function getallsanpham(){
                 $sanpham->sethinhanh($row['hinhanh']);
                 $sanpham->setgiaban($row['giaban']);
                 $sanpham->setloai($row['loai']);
-                $sanpham->sethang($row['hang']);
+                $sanpham->setloaicon($row['loaicon']);
                 $sanpham->settenloai($row['tenloai']);
-                $sanpham->settenhang($row['tenhang']);
+                $sanpham->settenloaicon($row['tenloaicon']);
         $listsanpham[]=$sanpham;
         }
         return $listsanpham;
@@ -83,12 +83,12 @@ public function getallsanpham(){
     
 public function getallsanphamdesc(){
     $db = database::getDB();
-    $querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+    $querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
     FROM sanpham
                       INNER JOIN loai
                           ON loai.idloai = sanpham.loai
-                             INNER JOIN hang
-                             on sanpham.hang = hang.idhang order by sanpham.idsanpham desc';
+                             INNER JOIN loaicon
+                             on sanpham.loaicon = loaicon.idloaicon order by sanpham.idsanpham desc';
     $result = $db->query($querry);
     $listsanpham=array();
     
@@ -100,24 +100,24 @@ public function getallsanphamdesc(){
             $sanpham->sethinhanh($row['hinhanh']);
             $sanpham->setgiaban($row['giaban']);
             $sanpham->setloai($row['loai']);
-            $sanpham->sethang($row['hang']);
+            $sanpham->setloaicon($row['loaicon']);
             $sanpham->settenloai($row['tenloai']);
-            $sanpham->settenhang($row['tenhang']);
+            $sanpham->settenloaicon($row['tenloaicon']);
     $listsanpham[]=$sanpham;
     }
     return $listsanpham;
     }
     
 
-public function getsanphambyloaivahang($loai,$hang,$s,$b){
+public function getsanphambyloaivaloaicon($loai,$loaicon,$s,$b){
     $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang
-                         WHERE loai='.$loai.' and hang ='.$hang.' LIMIT '.$s.' OFFSET '.$b.' ';
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon
+                         WHERE loai='.$loai.' and loaicon ='.$loaicon.' LIMIT '.$s.' OFFSET '.$b.' ';
 $result = $db->query($querry);
 $listsanpham=array();
 
@@ -129,22 +129,22 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 $listsanpham[]=$sanpham;
 }
 return $listsanpham;
 }
-public function getallsanphambyloaivahang($loai,$hang){
+public function getallsanphambyloaivaloaicon($loai,$loaicon){
     $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang
-                         WHERE loai='.$loai.' and hang ='.$hang.' ';
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon
+                         WHERE loai='.$loai.' and loaicon ='.$loaicon.' ';
 $result = $db->query($querry);
 $listsanpham=array();
 
@@ -156,9 +156,9 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 $listsanpham[]=$sanpham;
 }
 return $listsanpham;
@@ -172,14 +172,14 @@ public function suasanpham($sanphamc) {
     $mota = $sanpham->getmota();
     $hinhanh = $sanpham->gethinhanh();
     $loai = $sanpham->getloai();
-    $hang = $sanpham->gethang();
+    $loaicon = $sanpham->getloaicon();
     $giaban=$sanpham->getgiaban();
 
     try {
         $db = database::getDB();
 
         // Sử dụng Prepared Statements để cập nhật thông tin sản phẩm trong cơ sở dữ liệu
-        $query = "UPDATE sanpham SET tensanpham = '$tensp', mota = '$mota',  loai = '$loai', hang = '$hang',giaban= '$giaban' WHERE idsanpham = $idsanpham";
+        $query = "UPDATE sanpham SET tensanpham = '$tensp', mota = '$mota',  loai = '$loai', loaicon = '$loaicon',giaban= '$giaban' WHERE idsanpham = $idsanpham";
      
 
         // Thực thi truy vấn
@@ -222,12 +222,12 @@ public function suahinhanh($idsp,$hinhanh) {
 }
 public function getsanphambyloai($loai,$sanphammoitrang,$batdautu){
     $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon
                          WHERE loai='.$loai.' LIMIT '.$sanphammoitrang.' OFFSET '.$batdautu.' ';
 $result = $db->query($querry);
 $listsanpham=array();
@@ -240,19 +240,19 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 $listsanpham[]=$sanpham;
 }
 return $listsanpham;
 }
 public function getallsanphambyloai($loai) {
     $db = database::getDB();
-    $querry = 'SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota, sanpham.hinhanh, sanpham.giaban, sanpham.loai, sanpham.hang, loai.tenloai, hang.tenhang
+    $querry = 'SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota, sanpham.hinhanh, sanpham.giaban, sanpham.loai, sanpham.loaicon, loai.tenloai, loaicon.tenloaicon
     FROM sanpham
     INNER JOIN loai ON loai.idloai = sanpham.loai
-    INNER JOIN hang ON sanpham.hang = hang.idhang
+    INNER JOIN loaicon ON sanpham.loaicon = loaicon.idloaicon
     WHERE loai = :loai';
 
     $stmt = $db->prepare($querry);
@@ -269,9 +269,9 @@ public function getallsanphambyloai($loai) {
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
         $listsanpham[] = $sanpham;
     }
     
@@ -280,15 +280,15 @@ public function getallsanphambyloai($loai) {
 
 
 
-public function getsanhambyhang($hang,$sanphammoitrang,$batdautu){
+public function getsanhambyloaicon($loaicon,$sanphammoitrang,$batdautu){
     $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang
-                         WHERE hang ='.$hang.' LIMIT '.$sanphammoitrang.' OFFSET '.$batdautu.'';
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon
+                         WHERE loaicon ='.$loaicon.' LIMIT '.$sanphammoitrang.' OFFSET '.$batdautu.'';
 $result = $db->query($querry);
 $listsanpham=array();
 
@@ -300,22 +300,22 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 $listsanpham[]=$sanpham;
 }
 return $listsanpham;
 }
-public function getallsanhambyhang($hang){
+public function getallsanhambyloaicon($loaicon){
     $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang
-                         WHERE hang ='.$hang.'';
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon
+                         WHERE loaicon ='.$loaicon.'';
 $result = $db->query($querry);
 $listsanpham=array();
 
@@ -327,22 +327,22 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 $listsanpham[]=$sanpham;
 }
 return $listsanpham;
 }
-public function getsanhambyhangc($hang){
+public function getsanhambyloaiconc($loaicon){
     $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang
-                         WHERE hang ='.$hang.'';
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon
+                         WHERE loaicon ='.$loaicon.'';
 $result = $db->query($querry);
 $listsanpham=array();
 
@@ -354,9 +354,9 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 $listsanpham[]=$sanpham;
 }
 return $listsanpham;
@@ -383,12 +383,12 @@ public function gethinhanhbyidsanpham($idsanpham) {
 
 public function getallphukien(){
     $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon
                          WHERE loai<>1';
 $result = $db->query($querry);
 $listsanpham=array();
@@ -401,9 +401,9 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 $listsanpham[]=$sanpham;
 }
 return $listsanpham;
@@ -411,12 +411,12 @@ return $listsanpham;
 
 public function getsanphambyid($id){
     $db = database::getDB();
-$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+$querry='SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
 FROM sanpham
                   INNER JOIN loai
                       ON loai.idloai = sanpham.loai
-                         INNER JOIN hang
-                         on sanpham.hang = hang.idhang
+                         INNER JOIN loaicon
+                         on sanpham.loaicon = loaicon.idloaicon
                          WHERE sanpham.idsanpham ='. $id.'';
 $result = $db->query($querry);
 
@@ -430,9 +430,9 @@ foreach($result as $row){
         $sanpham->sethinhanh($row['hinhanh']);
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
-        $sanpham->sethang($row['hang']);
+        $sanpham->setloaicon($row['loaicon']);
         $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
 
 }
 return $sanpham;
@@ -441,12 +441,12 @@ return $sanpham;
 public function getsanphambyName($name){
 
     $db = database::getDB();
-    $querry = "SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.hang,loai.tenloai,hang.tenhang
+    $querry = "SELECT sanpham.idsanpham, sanpham.tensanpham, sanpham.mota,sanpham.hinhanh,sanpham.giaban,sanpham.loai,sanpham.loaicon,loai.tenloai,loaicon.tenloaicon
     FROM sanpham
                       INNER JOIN loai
                           ON loai.idloai = sanpham.loai
-                             INNER JOIN hang
-                             on sanpham.hang = hang.idhang where tensanpham LIKE '%" . $name . "%'";
+                             INNER JOIN loaicon
+                             on sanpham.loaicon = loaicon.idloaicon where tensanpham LIKE '%" . $name . "%'";
     $result = $db->query($querry);
     $listsanpham=array();
     
@@ -458,9 +458,9 @@ public function getsanphambyName($name){
             $sanpham->sethinhanh($row['hinhanh']);
             $sanpham->setgiaban($row['giaban']);
             $sanpham->setloai($row['loai']);
-            $sanpham->sethang($row['hang']);
+            $sanpham->setloaicon($row['loaicon']);
             $sanpham->settenloai($row['tenloai']);
-        $sanpham->settenhang($row['tenhang']);
+        $sanpham->settenloaicon($row['tenloaicon']);
     $listsanpham[]=$sanpham;
     }
     return $listsanpham;

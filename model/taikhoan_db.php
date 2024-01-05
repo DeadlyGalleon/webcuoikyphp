@@ -195,6 +195,18 @@ public function kiemtrataikhoan($taikhoan, $matkhau) {
 }
 
 
+public function getusernamebyid($iduser) {
+    $db = database::getDB();
+    $query = "SELECT tentaikhoan FROM taikhoan WHERE idtaikhoan ='$iduser'";
+    $statement = $db->query($query);
+    if ($statement) {
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result['tentaikhoan'];
+        }
+    }
+    return null; // Trả về null nếu không tìm thấy tên người dùng
+}
 
 
 

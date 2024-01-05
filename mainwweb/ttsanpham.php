@@ -12,7 +12,9 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet  "> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.1.0/css/v4-shims.min.css">
+  
     <!-- Css Styles -->
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
@@ -22,6 +24,11 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <style>
+  .hidden {
+    display: none;
+  }
+</style>
 </head>
 
 <body>
@@ -29,62 +36,7 @@
 
 
     <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <a href="#"><img src="img/logo.png" alt=""></a>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <div class="humberger__menu__widget">
-            <div class="header__top__right__language">
-                <img src="img/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                    <li><a href="#">Spanis</a></li>
-                    <li><a href="#">English</a></li>
-                </ul>
-            </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
-            </div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><a href="./shop-grid.html">Shop</a></li>
-                <li><a href="#">Pages</a>
-                    <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
-                        <li><a href="./checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
-                    </ul>
-                </li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-        <div class="header__top__right__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-pinterest-p"></i></a>
-        </div>
-        <div class="humberger__menu__contact">
-            <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
-            </ul>
-        </div>
-    </div>
+  
     <!-- Humberger End -->
 
     <!-- Header Section Begin -->
@@ -103,13 +55,17 @@ $ttsanpham=$sanphamdb->getsanphambyid($_GET['spid']);
 
 
 
-$listsanphamlienquan = $sanphamdb->getsanphambyloaivahang($ttsanpham->getloai(),$ttsanpham->gethang(),6,0);
+$listsanphamlienquan = $sanphamdb->getsanphambyloaivaloaicon($ttsanpham->getloai(),$ttsanpham->getloaicon(),6,0);
 $listHinhAnhChiTiet=$sanphamdb->gethinhanhbyidsanpham($_GET['spid']);
 
 
 
 $danhgiadb = new Danhgia_db();
 $listdanhgia = $danhgiadb->getalldanhgiabyidsp($_GET['spid']);
+
+$user = new taikhoandb();
+$username = $user->getusernamebyid($_GET['spid']);
+
 }
 
 ?> 
@@ -118,7 +74,7 @@ $listdanhgia = $danhgiadb->getalldanhgiabyidsp($_GET['spid']);
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+    <section class="breadcrumb-section set-bg" data-setbg="img/nenxanhdam.jpg">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -126,7 +82,7 @@ $listdanhgia = $danhgiadb->getalldanhgiabyidsp($_GET['spid']);
                         <h2>Thông Tin Sản Phẩm</h2>
                         <div class="breadcrumb__option">
                             <a href="../mainwweb"><?php echo $ttsanpham->gettenloai() ?> </a>
-                            <a href="../sanpham"><?php echo $ttsanpham->gettenhang() ?> </a>
+                            <a href="../sanpham"><?php echo $ttsanpham->gettenloaicon() ?> </a>
                             <span><?php echo $ttsanpham->gettensanpham() ?> </span>
                         </div>
                     </div>
@@ -145,13 +101,14 @@ $listdanhgia = $danhgiadb->getalldanhgiabyidsp($_GET['spid']);
                  echo'   <div class="product__details__pic">';
                  echo  '     <div class="product__details__pic__item">';
                  echo'           <img class="product__details__pic__item--large"';
-                  echo'              src="../image/'.$ttsanpham->gethinhanh().'" alt="">';
+                 if(count($listHinhAnhChiTiet)>0){
+                  echo'              src="../image/'.$listHinhAnhChiTiet[0]['hinhanh'].'" alt="">';
+                 }else{ echo'              src="../image/khongtontai.png" alt="">';}
                   echo'      </div>';
                    echo'     <div class="product__details__pic__slider owl-carousel">';
 
-                    echo'        <img data-imgbigurl="../image/'.$ttsanpham->gethinhanh().'"';
-                    // Hình ảnh phụ  chưa port ra
-                    echo'            src="../image/'.$ttsanpham->gethinhanh().'" alt="">';
+    
+                    // Hình ảnh phụ  chưa port r
 foreach($listHinhAnhChiTiet as $hinhanh){
     echo'        <img data-imgbigurl="../image/'.$hinhanh['hinhanh'].'"';
     // Hình ảnh phụ  chưa port ra
@@ -181,9 +138,6 @@ foreach($listHinhAnhChiTiet as $hinhanh){
                      echo'    <a href="#" class="primary-btn">ADD TO CARD</a>';
                      echo'    <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>';
                      echo'    <ul>';
-                     echo'      <li><b>Trạng thái</b> <span>Còn hàng</span></li>';
-                     
-                     echo'     <li><b>Chia sẻ</b>';
                      echo'         <div class="share">';
                      echo'             <a href="#"><i class="fa fa-facebook"></i></a>';
                                 echo'             <a href="#"><i class="fa fa-twitter"></i></a>';
@@ -206,7 +160,7 @@ foreach($listHinhAnhChiTiet as $hinhanh){
                         
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                    aria-selected="false">Reviews <span>(1)</span></a>
+                                    aria-selected="false">Đánh giá</span></a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -219,93 +173,168 @@ foreach($listHinhAnhChiTiet as $hinhanh){
                 
                             <div class="tab-pane" id="tabs-3" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <h6>Đánh giá</h6>
-                                    <div class="container">
-  <!-- <h3>Đánh giá sản phẩm</h3>
-  <form method="post" action="luu_danh_gia.php?spid=<?php echo $ttsanpham->getidsanpham() ?>">
-  <div class="form-group d-flex align-items-center">
-    <label class="mr-2" for="rating">Đánh giá:</label>
-    <select class="form-control" id="rating" name="rating">
-      <option value="5">5 sao</option>
-      <option value="4">4 sao</option>
-      <option value="3">3 sao</option>
-      <option value="2">2 sao</option>
-      <option value="1">1 sao</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="comment">Bình luận:</label>
-    <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
-  </div>
-  
-  <div class="form-group">
-    <button type="submit" class="btn btn-warning">Gửi đánh giá</button>
-  </div>
-</form> -->
+<h6>Đánh giá</h6>
+<div class="container">
 <div class="container">
   <h2>Các đánh giá</h2>
   <?php
-    $db = database::getDB();
-    // Kiểm tra xem người dùng đã bình luận cho sản phẩm này trước đó hay chưa
-    $idtk;
-    if(isset($_SESSION['idtk'])) $idtk=$_SESSION['idtk'];
-    $hasCommented = false; // Biến để kiểm tra
 
-    // Thực hiện truy vấn cơ sở dữ liệu để kiểm tra
+
+
+  //Hiện thị tổng số sao đánh giá
+  $totalRatings = 0; // Tổng số sao từ đánh giá
+$ratingCount = count($listdanhgia); // Số lượng đánh giá
+// Lặp qua mảng $listdanhgia
+foreach ($listdanhgia as $binhluan) {
+    $sosao = $binhluan->getsosao();
+    $totalRatings += $sosao;
+}
+$averageRating = $ratingCount > 0 ? $totalRatings / $ratingCount : 0;
+// Hiển thị số sao trung bình dưới dạng ngôi sao và nửa ngôi sao
+echo '<div class="rating">';
+// for ($i = 1; $i <= 5; $i++) {
+//     // Hiển thị ngôi sao đánh giá
+//     if ($i <= floor($averageRating)) {
+//         echo '<i class="fa-solid fa-star"  style="color: #FFA500;"></i>'; // Ngôi sao hoàn toàn
+//     } elseif ($i - 0.5 <= $averageRating) {
+//         echo '<i class="fa-solid fa-star-half-stroke" style="color:#FFA500;"></i>'; // Nửa ngôi sao
+//     } else {
+//         echo '<i class="fa-regular fa-star" style="color:#FFA500;"></i>'; // Ngôi sao rỗng
+//     }
+// }
+echo ' '.$averageRating.'/5 <i class="fa-solid fa-star"  style="color: #FFA500;"></i>';
+echo '</div>';
+  //Đóng hiển thị số sao trung bình
+
+
+
+//Kiểm tra bình luận
+$db = database::getDB();
+// Kiểm tra xem người dùng đã bình luận cho sản phẩm này trước đó hay chưa
+$idtk = isset($_SESSION['idtk']) ? $_SESSION['idtk'] : null;
+$hasCommented = false; // Biến để kiểm tra
+
+// Thực hiện truy vấn cơ sở dữ liệu để kiểm tra
+if ($idtk) {
     $previousCommentQuery = "SELECT * FROM danhgia WHERE iduser = '$idtk' AND idsp = '{$ttsanpham->getidsanpham()}'";
     $previousCommentResult = $db->query($previousCommentQuery);
     if ($previousCommentResult->rowCount() > 0) {
         $hasCommented = true;
-    }   
+    }
+}
 
-    // Kiểm tra biến $hasCommented để xác định liệu người dùng đã bình luận trước đó hay chưa
-
-    if ($hasCommented) {
-        // Người dùng đã bình luận trước đó, hiển thị thông báo
-        echo '<p>Bạn đã đánh giá cho sản phẩm này trước đó.</p>';}
-      else{
-          $idsanpham = $ttsanpham->getidsanpham();
-          echo'  <form method="post" action="../control/luu_danh_gia.php?spid='.$idsanpham.'">';
-          echo'  <div class="form-group d-flex align-items-center">';
-          echo'    <label class="mr-2" for="rating">Đánh giá:</label>';
-          echo'    <select class="form-control" id="rating" name="rating">';
-          echo'      <option value="5">5 sao</option>';
-          echo'      <option value="4">4 sao</option>';
-          echo'      <option value="3">3 sao</option>';
-           echo'     <option value="2">2 sao</option>';
-           echo'     <option value="1">1 sao</option>';
-           echo'   </select>';
-          echo'  </div>';
-         echo'   <div class="form-group">';
-         echo'     <label for="comment">Bình luận:</label>';
-         echo'     <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>';
-         echo'   </div>';
-            
-         echo'   <div class="form-group">';
-          echo'    <button type="submit" class="btn btn-warning">Gửi đánh giá</button>';
-         echo'   </div>';
-         echo' </form>';
-        }   
+// Kiểm tra biến $hasCommented để xác định liệu người dùng đã bình luận trước đó hay chưa
+if ($hasCommented) {
+    // Người dùng đã bình luận trước đó, hiển thị thông báo
+    echo '<p>Bạn đã đánh giá cho sản phẩm này trước đó.</p>';
+} elseif ($idtk) {
+    $idsanpham = $ttsanpham->getidsanpham();
+    echo '<form method="post" action="../control/luu_danh_gia.php?spid='.$idsanpham.'">';
+    echo '  <div class="form-group d-flex align-items-center">';
+    echo '    <label class="mr-2" for="rating">Đánh giá:</label>';
+    echo '    <select class="form-control" id="rating" name="rating">';
+    echo '      <option value="5">5 sao</option>';
+    echo '      <option value="4">4 sao</option>';
+    echo '      <option value="3">3 sao</option>';
+    echo '      <option value="2">2 sao</option>';
+    echo '      <option value="1">1 sao</option>';
+    echo '    </select>';
+    echo '  </div>';
+    echo '  <div class="form-group">';
+    echo '    <label for="comment">Bình luận:</label>';
+    echo '    <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>';
+    echo '  </div>';
+    echo '  <div class="form-group">';
+    echo '    <button type="submit" class="btn btn-warning">Gửi đánh giá</button>';
+    echo '  </div>';
+    echo '</form>';
+}
+    //   echo'  <form method="GET" action="">';
+    //   echo'<select name="filterRating">';
+    //   echo' <option value="0">Tất cả</option>';
+    //   echo'  <option value="1">1 sao</option>';
+    //   echo'  <option value="2">2 sao</option>';
+    //   echo'  <option value="3">3 sao</option>';
+    //   echo'  <option value="4">4 sao</option>';
+    //   echo'  <option value="5">5 sao</option>';
+    //   echo' </select>';
+    //   echo' <button type="submit">Lọc</button>';
+    //   echo' </form>';
     
+        //Hiện thị các bình luận đánh giá
         if (!empty($listdanhgia)) {
-            // Lặp qua mảng $listdanhgia từ cuối đến đầu
+            $totalRatings = 0; // Tổng số sao từ đánh giá
+            $ratingCount = count($listdanhgia); // Số lượng đánh giá
+        
+            // Lặp qua mảng $listdanhgia theo thứ tự ngược lại
             for ($i = count($listdanhgia) - 1; $i >= 0; $i--) {
-              $binhluan = $listdanhgia[$i];
-              
-              echo '<div class="card mb-3">';
-              echo '  <div class="card-body">';
-              echo '    <h5 class="card-title">Đánh giá: '.$binhluan->getsosao().' sao</h5>';
-              echo '    <p class="card-text">Khách hàng:'.$binhluan->getIduser().'</p>';
-              echo '    <p class="card-text">'.$binhluan->getBinhLuan().'</p>';
-              echo '  </div>';
-              echo '</div>';
+                $binhluan = $listdanhgia[$i];
+                $sosao = $binhluan->getsosao();
+                $totalRatings += $sosao;
+        
+                // Hiển thị đánh giá
+                echo '<div class="card mb-3">';
+                echo '  <div class="card-body">';
+                echo '    <h5 class="card-title">Đánh giá:';
+                for ($j = 1; $j <= 5; $j++) {
+                    // Hiển thị ngôi sao đánh giá
+                    if ($j <= $sosao) {
+                        echo '<i class="fa-solid fa-star" style="color: #FFA500;"></i>'; // Ngôi sao hoàn toàn
+                    } else {
+                        echo '<i class="fa-regular fa-star" style="color: #FFA500;"></i>'; // Ngôi sao rỗng
+                    }
+                }
+                echo '</h5>';
+                echo '    <div class="d-flex justify-content-left align-items-center mb-3">';
+                echo '      <h6 class="mb-0 mr-2">Thời gian:</h6>';
+                echo '      <p class="mb-0 text-muted small">' . $binhluan->getNgaygio() . '</p>';
+                echo '    </div>';
+                echo '    <p class="card-text">Khách hàng: ' . $user->getusernamebyid($binhluan->getIduser()) . '</p>';
+                echo '    <p class="card-text">Đánh giá: ' . $binhluan->getBinhLuan() . '</p>';
+                if ($binhluan->getIduser() == $_SESSION['idtk']) {
+                    echo '<button class="btn btn-primary" onclick="editRating(' . $binhluan->getIduser() . ')">Sửa đánh giá</button>';
+                    echo '<span> </span>';
+                    echo '<a href="../control/xoa_danh_gia.php?spid='.$binhluan->getIdSanPham().'" class="btn btn-danger">Xoá đánh giá</a>';
+                }
+                echo '  </div>';
+                echo '</div>';
+
+                //form
+echo'   <form id="editForm" class="hidden" action="../control/sua_danh_gia.php?spid='. $binhluan->getIdSanPham().' " method="POST">';
+ echo' <div class="form-group row">';
+ echo'   <label for="rating" class="col-sm-2 col-form-label">Số sao:</label>';
+ echo'   <div class="col-sm-10">';
+  echo'    <select class="form-control" id="rating" name="rating">';
+  echo'      <option value="5">5 sao</option>';
+  echo'      <option value="4">4 sao</option>';
+  echo'      <option value="3">3 sao</option>';
+  echo'      <option value="2">2 sao</option>';
+  echo'      <option value="1">1 sao</option>';
+  echo'    </select>';
+  echo'  </div>';
+ echo' </div>';
+ echo' <div class="form-group row">';
+ echo'   <label for="binhluan" class="col-sm-2 col-form-label">Bình luận:</label>';
+ echo'   <div class="col-sm-10">';
+ echo'     <textarea class="form-control" id="binhluan" name="binhluan">'.$binhluan->getBinhLuan().'</textarea>';
+ echo'   </div>';
+ echo' </div>';
+ echo' <div class="form-group row">';
+ echo'   <div class="col-sm-10 offset-sm-2">';
+ echo'     <button type="submit" class="btn btn-primary">Lưu</button>';
+ echo'     <button type="button" class="btn btn-danger" onclick="hideEditForm()">Xóa</button>';
+ echo'   </div>';
+ echo' </div>';
+echo'</form>';
+// form
+
             }
-          } else {
+        } else {
             echo '<p>Chưa có đánh giá nào.</p>';
-          }
-      
-      
+        }
+      //Đóng kiểm tra  
     ?>
+    
 </div>
 </div>
                                 </div>
@@ -325,7 +354,7 @@ foreach($listHinhAnhChiTiet as $hinhanh){
                 
                 <div class="col-lg-12">
                     <div class="section-title related__product__title">
-                        <h2>Sanr Phẩm Liên Quan</h2>
+                        <h2>Sản Phẩm Liên Quan</h2>
                     </div>
                 </div>
             </div>
@@ -342,7 +371,7 @@ foreach($listHinhAnhChiTiet as $hinhanh){
               echo'       </ul>';
               echo'   </div>';
               echo'   <div class="product__item__text">';
-              echo'       <h6><a href="#">'.$sanphamc->gettensanpham().'</a></h6>';
+              echo'       <h6><a href="ttsanpham.php?spid='.$sanphamc->getidsanpham().'">'.$sanphamc->gettensanpham().'</a></h6>';
               echo'       <h5>Giá bán: '.$sanphamc->getgiaban().'</h5>';
              echo'    </div>';
            echo'  </div>';
@@ -361,7 +390,26 @@ foreach($listHinhAnhChiTiet as $hinhanh){
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
+    <script>
+  function toggleEditForm() {
+    var form = document.getElementById("editForm");
+    if (form.classList.contains("hidden")) {
+      form.classList.remove("hidden");
+    } else {
+      form.classList.add("hidden");
+    }
+  }
+
+  function editRating(id) {
+    toggleEditForm();
+  }
+
+  function hideEditForm() {
+    var form = document.getElementById("editForm");
+    form.classList.add("hidden");
+  }
  
+</script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.nice-select.min.js"></script>

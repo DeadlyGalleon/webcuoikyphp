@@ -66,7 +66,7 @@ input, button, select, textarea {
        
         <div class="container">
         <div class="row">
-        <a href="../web">   <button type="submit">Trở Về Trang Chủ</button></a>
+        <a href="../mainwweb">   <button type="submit">Trở Về Trang Chủ</button></a>
            
            <a  href="../quanly/"><button type="submit">Quản lý Sản Phẩm</button></a>
            <?php if($taikhoan->getadmin()==1){ ?>
@@ -228,24 +228,25 @@ input, button, select, textarea {
         </tfoot>
         </table>'; 
         
-        if($donhang['thongtindonhang']['trangthai'] !== 1 && !$donhang['thongtindonhang']['trangthai']!==4){
-
-        ?> 
-         <form action="../control/update_trangthai.php" method="post">
-            <input type="hidden" name="iddonhang" value="<?php echo $donhang['thongtindonhang']['iddonhang']; ?>">
-            <h3>Trạng Thái:</h3>  
-            <select name="trangthai">
-                <option value="0" <?php if($donhang['thongtindonhang']['trangthai'] === 0) echo 'selected'; ?>>Chưa Xác Nhận</option>
-                <option value="2" <?php if($donhang['thongtindonhang']['trangthai'] === 2) echo 'selected'; ?>>Đã Xác Nhận</option>
-                <option value="3" <?php if($donhang['thongtindonhang']['trangthai'] === 3) echo 'selected'; ?>>Đang Giao</option>
-                <option value="4" <?php if($donhang['thongtindonhang']['trangthai'] === 4) echo 'selected'; ?>>Đã Giao</option>
-            </select>
-            <button type="submit">Lưu</button>
-        </form>
-
-<?php }       
-
-?>
+        if ($donhang['thongtindonhang']['trangthai'] !== 1 && $donhang['thongtindonhang']['trangthai'] !== 4) {
+         
+        ?>
+            <form action="../control/update_trangthai.php" method="post">
+                <input type="hidden" name="iddonhang" value="<?php echo $donhang['thongtindonhang']['iddonhang']; ?>">
+                <h3>Trạng Thái:</h3>  
+                <select name="trangthai">
+                    <option value="0" <?php if ($donhang['thongtindonhang']['trangthai'] === 0) echo 'selected'; ?>>Chưa Xác Nhận</option>
+                    <option value="2" <?php if ($donhang['thongtindonhang']['trangthai'] === 2) echo 'selected'; ?>>Đã Xác Nhận</option>
+                    <option value="3" <?php if ($donhang['thongtindonhang']['trangthai'] === 3) echo 'selected'; ?>>Đang Giao</option>
+                    <option value="4" <?php if ($donhang['thongtindonhang']['trangthai'] === 4) echo 'selected'; ?>>Đã Giao</option>
+                </select>
+                <button type="submit">Lưu</button>
+            </form>
+        <?php
+        }else{
+            echo "Đơn Hàng Đã Giao!";
+        }
+        ?>
 
 
 

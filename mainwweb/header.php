@@ -25,8 +25,15 @@ if (isset($_SESSION['taikhoan'])) {
 
                             ?>
                             <ul>
-                                <li><i class="fa fa-envelope"></i> Xin Chào <?php echo $taikhoan->gettentaikhoan(); ?> </li>
-                            
+
+                                <li><i></i> Xin Chào <?php echo $taikhoan->gettentaikhoan(); ?> </li>
+                            <?php if($taikhoan->getadmin()==1 || $taikhoan->getquanly()==1) {?> 
+                          <a href="../quanly/"><li><i></i> Trang Quản Lý </li></a>  
+                       <a href="../mainwweb/lichsudonhang.php"><li><i></i> Lịch Sử Đơn Hàng </li></a>
+                          <?php }else{
+                            echo '<a href="../mainwweb/lichsudonhang.php"><li> Lịch Sử Đơn Hàng </li></a> ';
+                          }
+                          ?> 
                             </ul>
                             <?php }?> 
 
@@ -63,7 +70,7 @@ if (isset($_SESSION['taikhoan'])) {
                             <li><a href="../mainwweb/">Trang Chủ</a></li>
                             <li><a href="shop.php">Cửa Hàng</a></li>
                        
-                            <li><a href="./blog.html">Blog</a></li>
+                      
                             <li><a href="./contact.html">Liên Hệ</a></li>
                         </ul>
                     </nav>
@@ -72,9 +79,31 @@ if (isset($_SESSION['taikhoan'])) {
                     <div class="header__cart">
                         <ul>
                             
-                            <li><a href="giohang.php"><i class="fa fa-shopping-bag"></i> <span></span></a></li>
+                          
+                                
+                                <?php if(isset($_SESSION['taikhoan'])) {
+                                    echo '  <li><a href="giohang.php"><i class="fa fa-shopping-cart">';
+                                $giohangdb=new giohangdb();
+                               
+                          echo  '</i> <span>'.Count($giohangdb->laygiohang($_SESSION['idtk'])).'</span></a></li>';
+
+
+                             }
+                             else{
+                               echo' <li><a href="giohang.php"><i class="fa fa-shopping-cart">';
+                               echo  '</i> <span></span></a></li>';
+                                
+                          
+                               
+                       
+
+
+                             
+                             }
+                              ?> 
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                    
+                       
                     </div>
                 </div>
             </div>

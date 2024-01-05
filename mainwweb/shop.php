@@ -13,7 +13,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>Sản Phẩm</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -97,13 +97,13 @@
 <?php 
 $sanphamdb= new sanphamdb();
 $listallsanpham=$sanphamdb->getallsanpham();
-
-if(isset($_GET['idloai']) && !isset($_GET['idhang'])){
+echo count($listallsanpham);
+if(isset($_GET['idloai']) && !isset($_GET['idloaicon'])){
                
     $listallsanpham=$sanphamdb->getallsanphambyloai($_GET['idloai']);
   }
-  elseif(isset($_GET['idloai']) && isset($_GET['idhang'])){
-    $listallsanpham=$sanphamdb->getallsanphambyloaivahang($_GET['idloai'],$_GET['idhang']);
+  elseif(isset($_GET['idloai']) && isset($_GET['idloaicon'])){
+    $listallsanpham=$sanphamdb->getallsanphambyloaivaloaicon($_GET['idloai'],$_GET['idloaicon']);
   }
 
 
@@ -137,23 +137,7 @@ if(isset($_GET['idloai']) && !isset($_GET['idhang'])){
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
                       <?php include('danhmuc.php'); ?> 
-                        <div class="sidebar__item">
-                            <h4>Price</h4>
-                            <div class="price-range-wrap">
-                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                                    data-min="10" data-max="540">
-                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                </div>
-                                <div class="range-slider">
-                                    <div class="price-input">
-                                        <input type="text" id="minamount">
-                                        <input type="text" id="maxamount">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      
                       
                         <div class="sidebar__item">
                            <?php include('sanphammoi.php'); ?> 
@@ -166,9 +150,13 @@ if(isset($_GET['idloai']) && !isset($_GET['idhang'])){
                     <?php
                             foreach($listallsanpham as $sp){
                         echo'<div class="col-lg-4 col-md-6 col-sm-6">';
-                            
+                            $hinhanh=$sanphamdb->gethinhanhbyidsanpham($sp->getidsanpham());
                            echo' <div class="product__item">';
-                            echo'    <div class="product__item__pic set-bg" data-setbg="../image/'.$sp->gethinhanh().'">';
+                           if(count($hinhanh)>0){
+                            echo'    <div class="product__item__pic set-bg" data-setbg="../image/'.$hinhanh[0]['hinhanh'].'">';
+                           }else{
+                            echo'    <div class="product__item__pic set-bg" data-setbg="../image/khongtontai.png">';
+                           }
                             echo'        <ul class="product__item__pic__hover">';
                         
                        
