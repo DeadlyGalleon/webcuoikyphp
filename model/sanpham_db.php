@@ -201,6 +201,7 @@ public function getallsanphamdesc(){
             $sanpham->setloai($row['loai']);
             $sanpham->setloaicon($row['loaicon']);
             $sanpham->settenloai($row['tenloai']);
+            $sanpham->settenloaicon($row['tenloaicon']);
             $sanpham->setlanmua($row['lanmua']);
     $listsanpham[]=$sanpham;
     }
@@ -531,6 +532,7 @@ foreach($result as $row){
         $sanpham->setgiaban($row['giaban']);
         $sanpham->setloai($row['loai']);
         $sanpham->setloaicon($row['loaicon']);
+        $sanpham->settenloaicon($row['tenloaicon']);
         $sanpham->settenloai($row['tenloai']);
         $sanpham->setlanmua($row['lanmua']);
 
@@ -546,7 +548,10 @@ public function getsanphambyName($name){
                       INNER JOIN loai
                           ON loai.idloai = sanpham.loai
                              INNER JOIN loaicon
-                             on sanpham.loaicon = loaicon.idloaicon where tensanpham LIKE '%" . $name . "%'";
+                             on sanpham.loaicon = loaicon.idloaicon where tensanpham LIKE '%" . $name . "%'
+                    
+                             
+                             ";
     $result = $db->query($querry);
     $listsanpham=array();
     

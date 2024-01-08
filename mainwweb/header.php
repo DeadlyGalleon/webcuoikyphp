@@ -71,7 +71,7 @@ if (isset($_SESSION['taikhoan'])) {
                             <li><a href="shop.php">Cửa Hàng</a></li>
                        
                       
-                            <li><a href="lienhe.php">Liên Hệ</a></li>
+                      
                         </ul>
                     </nav>
                 </div>

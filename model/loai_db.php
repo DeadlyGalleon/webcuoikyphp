@@ -51,6 +51,14 @@ public function themloai($loai) {
     $stmt->execute();
 }
 
+public function gettenloai($loai) {
+    $db = database::getDB();
+    $querry = 'select tenloai from loai where idloai='.$loai.'';
+    
+    // Prepare the SQL statement
+   return $db->query($querry);
+}
+
 public function xoaloai($loai) {
     $db = database::getDB();
     $querry = 'DELETE FROM loai WHERE `loai`.`idloai` = '.$loai.';';

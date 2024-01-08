@@ -1,7 +1,7 @@
 <?php 
 
 
-header('Location: ../webcuoiky/mainwweb');
+header('Location: ../webcuoiky/mainwweb/');
 exit();
 
 

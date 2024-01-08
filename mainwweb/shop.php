@@ -57,7 +57,7 @@ if(isset($_GET['idloai']) && !isset($_GET['idloaicon'])){
 <?php include('vungtimkiem.php'); ?> 
     <!-- Hero Section End -->
 
-    <!-- Breadcrumb Section Begin -->
+ 
     <section class="breadcrumb-section set-bg" data-setbg="img/nenxanhdam.jpg">
         <div class="container">
             <div class="row">
@@ -65,7 +65,7 @@ if(isset($_GET['idloai']) && !isset($_GET['idloaicon'])){
                     <div class="breadcrumb__text">
                         <h2>Của Hàng Bách Hoá</h2>
                         <div class="breadcrumb__option">
-                            <a href="../mainwweb/">Trang Chủ</a>
+                
                             <span>Sản Phẩm</span>
                         </div>
                     </div>

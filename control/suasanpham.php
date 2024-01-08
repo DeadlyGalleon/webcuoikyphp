@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Kiểm tra và xử lý hình ảnh
  echo "bat dau lam";
 
- if (isset($_FILES['image'])) {
+ if (isset($_FILES['image']) && $_FILES['image']['error'] === 0){
         $db= database::getDB();
         echo "có hình ảnh";
         $total_images_detail = count($_FILES['image']['name']);

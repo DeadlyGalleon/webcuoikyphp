@@ -74,6 +74,7 @@ input, button, select, textarea {
            
            <a href="quanlytaikhoan.php"><button type="submit">Quản lý tài khoản</button></a>
            <?php }?> 
+           <a href="thongke.php"><button type="submit">Thống Kê</button></a>
           
            </div> 
 

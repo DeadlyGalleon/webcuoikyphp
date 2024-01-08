@@ -7,9 +7,9 @@
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
-                            <form action="../mainwweb/timkiem.php" method="Post">
+                            <form action="../mainwweb/timkiem.php" method="get">
                           
-                                <input type="text" placeholder="Tìm Kiếm Sản Phẩm">
+                                <input name="txt" type="text" placeholder="Tìm Kiếm Sản Phẩm">
                                 <button type="submit" class="site-btn">Tìm Kiếm</button>
                             </form>
                         </div>

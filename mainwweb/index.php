@@ -24,7 +24,9 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 
+<style>
 
+</style>
 
 <body>
     <!-- Page Preloder -->
@@ -36,6 +38,20 @@
 
     <!-- Header Section Begin -->
    <?php include('header.php'); ?> 
+   <section class="breadcrumb-section set-bg" data-setbg="img/nenxanhdam.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Của Hàng Bách Hoá</h2>
+                       
+                    
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Header Section End -->
 
     <!-- Hero Section Begin -->
